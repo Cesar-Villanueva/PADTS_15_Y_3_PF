@@ -43,12 +43,16 @@ int main(void) {
     Init_config.minutes_semaphore = xSemaphoreCreateBinary();
     Init_config.hours_semaphore   = xSemaphoreCreateBinary();
 
+    /************ Queues to be created *********/
+    mailbox = xQueueCreate(SIZE_QUEUE,sizeof(time_msg_t*));
+    vQueueAddToRegistry(mailbox, "time_queue");
 
     /************ The tasks to be created. *********/
-    xTaskCreate(seconds_task, "Function seconds", Stack, (void*) &Init_config, configMAX_PRIORITIES -4, NOT);
-    xTaskCreate(minutes_task, "Function Minutes", Stack, (void*) &Init_config, configMAX_PRIORITIES -3, NOT);
-    xTaskCreate(hours_task,   "Function Hous"   , Stack, (void*) &Init_config, configMAX_PRIORITIES -2, NOT);
-    xTaskCreate(alarm_task,   "Function Alarm"  , Stack, (void*) &Init_config, configMAX_PRIORITIES -1, NOT);
+    xTaskCreate(seconds_task, "Function seconds", Stack, (void*) &Init_config, configMAX_PRIORITIES -3, NULL);
+    xTaskCreate(minutes_task, "Function Minutes", Stack, (void*) &Init_config, configMAX_PRIORITIES -2, NULL);
+    xTaskCreate(hours_task,   "Function Hours"  , Stack, (void*) &Init_config, configMAX_PRIORITIES -1, NULL);
+    xTaskCreate(alarm_task,   "Function Alarm"  , Stack, (void*) &Init_config, configMAX_PRIORITIES -4, NULL);
+    xTaskCreate(print_task,   "Function print"  , Stack,                NULL , configMAX_PRIORITIES -4, NULL);
 
 
 
