@@ -7,7 +7,9 @@ El objetivo principal de este codigo es utilizar FreeRTOS para generar el funion
 
                      ­PROYECTO_FINAL_RTOS.h ­
                      
-alalla
+En este archivo se encuentra toda la funcionalidad del reloj digital , apoyandonos de otros headers files para su correcto funcionamiento. 
+
+
 
 
 
