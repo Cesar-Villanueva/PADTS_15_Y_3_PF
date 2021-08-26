@@ -12,6 +12,8 @@ El objetivo principal de este codigo es utilizar FreeRTOS para generar el funion
 
 # Explicación del Codigo 
 
+* [General info](#general-info)
+
                      ­  main.c ­
 
 Como primera línea de código se manda a llamar una sola librería llamada “Proyecto_Final_RTOS.h” donde este archivo header contiene todo lo necesario para trabajar en el main. 
