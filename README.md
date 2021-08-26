@@ -14,6 +14,7 @@ Se codifico un programa para hacer la funcionalidad de un reloj digital con Free
     * [Header File](#Header)
       * [Funciones](#Funciones)
       * [Tasks](#Tasks)
+* [Resultados](#Resultados)
 
 
 
@@ -138,7 +139,7 @@ Solo creo una función en este programa, esta función se utiliza de la siguient
 ------------------------------------------------------
 
 
-# Pruebas y resultados 
+# Resultados
 
 
 
