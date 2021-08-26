@@ -23,9 +23,9 @@ int main(void) {
     // Init struct
 
     /********** Initializing Alarm Parameters*******/
-    Init_config.hour   = Alarm_Hours;
-    Init_config.minute = Alarm_Minutes;
-    Init_config.second = Alarm_Seconds;
+    Init_config.alarm_hour   = Alarm_Hours;
+    Init_config.alarm_minute = Alarm_Minutes;
+    Init_config.alarm_second = Alarm_Seconds;
 
     /********** Initializing Time Parameters*******/
     Init_config.set_hour   = Set_Hours;
@@ -60,7 +60,7 @@ int main(void) {
     xTaskCreate(hours_task,   "Function Hours"  , Stack, (void*) &Init_config, configMAX_PRIORITIES -1, NULL);
     xTaskCreate(alarm_task,   "Function Alarm"  , Stack, (void*) &Init_config, configMAX_PRIORITIES -4, NULL);
     xTaskCreate(print_task,   "Function print"  , Stack,                NULL , configMAX_PRIORITIES -4, NULL);
-    xTaskCreate(LCD_init  ,   "Function LCD"    , Stack, (void*) &Init_config , configMAX_PRIORITIES -1, NULL);
+    xTaskCreate(LCD_init  ,   "Function LCD"    , Stack, (void*) &Init_config, configMAX_PRIORITIES   , NULL);
 
 
     /************ Start the calendarizer *********/

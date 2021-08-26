@@ -29,12 +29,12 @@
 /* TODO: insert other definitions and declarations here. */
 
 #define Stack 200						/* Value Stack from tasks */
-#define Alarm_Hours    1u				/* Time value in the alarm Hours*/
-#define Alarm_Minutes 28u				/* Time value in the alarm Minutes */
-#define Alarm_Seconds 33u				/* Time value in the alarm  Seconds*/
+#define Alarm_Hours    2u				/* Time value in the alarm Hours*/
+#define Alarm_Minutes 29u				/* Time value in the alarm Minutes */
+#define Alarm_Seconds 57u				/* Time value in the alarm  Seconds*/
 #define Set_Hours	   1u				/* Initial clock value Hours */
 #define Set_Minutes	  28u				/* Initial clock value Minutes */
-#define Set_Seconds	  28u				/* Initial clock value Seconds */
+#define Set_Seconds	  56u				/* Initial clock value Seconds */
 #define SECONDS_TASK_BIT ( 1UL << 0UL ) /* Event bit 0 */
 #define MINUTES_TASK_BIT ( 1UL << 1UL ) /* Event bit 1 */
 #define HOURS_TASK_BIT ( 1UL << 2UL )   /* Event bit 2 */
@@ -64,9 +64,9 @@ const uint8_t Marco_1[] = {
 
 typedef struct {
 	/**** Dates alarm ****/
-	uint8_t second;
-	uint8_t minute;
-	uint8_t hour;
+	uint8_t alarm_second;
+	uint8_t alarm_minute;
+	uint8_t alarm_hour;
 
 	/**** Set Time  ****/
 	uint8_t set_second;
@@ -137,7 +137,7 @@ static void seconds_task (void *args){
 	for (;;) {
 
 
-		if(Init_Config->second == Init_Config->set_second){
+		if(Init_Config->alarm_second == Init_Config->set_second){
 			xEventGroupSetBits(Init_Config->xEventGroup, SECONDS_TASK_BIT);
 		}
 		Init_Config->set_second++;
@@ -171,7 +171,7 @@ static void minutes_task (void *args){
 
 	for(;;){
 
-		if(Init_Config->minute == Init_Config->set_minute){
+		if(Init_Config->alarm_minute == Init_Config->set_minute){
 			xEventGroupClearBits(Init_Config->xEventGroup,SECONDS_TASK_BIT);
 			xEventGroupSetBits(Init_Config->xEventGroup, MINUTES_TASK_BIT);
 		}
@@ -205,7 +205,7 @@ static void hours_task   (void *args){
 	time_msg_t *Send;
 	for(;;){
 
-		if(Init_Config->hour == Init_Config->set_hour){
+		if(Init_Config->alarm_hour == Init_Config->set_hour){
 			xEventGroupClearBits(Init_Config->xEventGroup,MINUTES_TASK_BIT);
 			xEventGroupSetBits(Init_Config->xEventGroup, HOURS_TASK_BIT);
 		}
