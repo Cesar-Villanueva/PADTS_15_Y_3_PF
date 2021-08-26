@@ -73,7 +73,31 @@ Se inician 2 arreglos con valores en hexadecimal , estos 2 arreglos son imágene
 
 Se define una estructura con un typedef, esta estatura tiene un identificador llamado Init , este tipo de estructura se declaro en el main , aquí se explicará el porqué de cada miembro de esta estructura. 
 Esta estructura se hizo con el fin de que, al momento de crear las tareas , se puedera pasar una referencia única de tamaño de 32 bits de palabra (Que es el que maneja este microcontrolador) y no pasar una copia de todos los datos. 
-De la línea 67 a la 69 se declaran 3 variables de tipo entero sin signo de 8 bits , este tipo de variables son reconocidas en la librería #include <stdint.h> y esta librería viene incluida una la librería en el proyecto y no se tiene que volver a declarar. Estas 3 variables servirán para poner un valor de set de la alarma , en este caso se le paso una macro en el main. De la línea 72 a la línea 74   
+De la línea 67 a la 69 se declaran 3 variables de tipo entero sin signo de 8 bits , este tipo de variables son reconocidas en la librería #include <stdint.h> y esta librería viene incluida una la librería en el proyecto y no se tiene que volver a declarar. Estas 3 variables servirán para poner un valor de set de la alarma , en este caso se le paso una macro en el main. De la línea 72 a la línea 74  se declaran 3 variables tipo entero sin signo de 8 bits, estas 3 variables serán utilizadas para le set de la hora en  la que tiene que empezar el reloj, en la línea 77 se y clara una variable de tipo event group handle  para poder utilizar un grupo de eventos y en las líneas  80 y 81 se declaran 2 variables de tipo semaphore handle que servirán para poder crear y utilizar los semáforos. 
+
+•	_De la línea 85 a la línea 99_ 
+
+De la línea 85 a la 89 de declara un tipo enumerado para contar con 3 identificadores que servirán para la estructura de tipo time_msg_t declarada de la línea 91 a la 94 , esta estructura servirá para poder pasar la información en una Queue donde necesitaremos un identificador y el valor, es por eso por lo que en la estructura se declara una variable de tipo enumerado y una variable de tipo entero sin signo de 8 bits. Despues de la línea 96 a la 99 se declara una estructura que se llamará Int_to_char esta estructura tendrá declarado 2 variables de tipo entero sin signo de 8 bits que serán las unidades y las decenas , esta estructura nos servirá al momento de imprimir valores en la pantalla. 
+
+•	_De la línea 101 a la 104_ 
+
+En la línea 101 se declara una variable de tipo Queue Handle para crear una Queue , esta Queue tiene el nombre de mailbox , esta Queue ya fue creada en el main. En las siguientes líneas se declaran 2 variables de tipo semaphore handle con los nombres de mutex y LCD , estas 2 variables ya fueron utilizadas en el main , la de LCD es un semáforo binario y la de mutex es un Mutex. 
+
+•	_Funciones_
+
+------------------------------------------------------
+
+_Int_to_char_
+
+Solo creo una función en este programa, esta función se utiliza de la siguiente manera , la función pide como argumento un entero sin signo de 8 bits y retorno una estructura de tipo Int_to_Char de la línea de condigo 96, ahora apuntando a la línea 344 podemos ver que se empieza por inicializar una estructura llamada LCD y después de la línea 348  a la 371 se encuentran varias condicionales que lo que van a hacer esta estar preguntando en que rango de valores se encuentra el numero de entrada , y dependiendo del valor de entrada se le asignaran valores a la estructura en la variable de unidades y de decenas , que pasa el fragmento de las condicionales retornara como valor la estructura creada  pero ya con valores establecidos para poder acceder a ellos. Teniendo en cuenta que los valores que regresa son valores que en hexadecimal corresponde a un número en código ASIC .  Esta función está personalizada a este programa y se puede sustituir por cualquier otra siempre y cuando se respete la lógica de las tareas que ocupan esta función. 
+
+------------------------------------------------------
+
+•	_Funcionalidad de las tareas (Task)_
+
+
+_seconds_task_
+  
 
 
 
