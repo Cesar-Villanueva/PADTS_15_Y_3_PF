@@ -12,6 +12,8 @@ Se codifico un programa para hacer la funcionalidad de un reloj digital con Free
 * [Explicación del Codigo](#Descripción )
     * [Main File](#Main)
     * [Header File](#Header)
+    * [Funciones](#Funciones)
+    * [Tasks](#Tasks)
 
 
 
@@ -113,7 +115,8 @@ De la línea 85 a la 89 de declara un tipo enumerado para contar con 3 identific
 
 En la línea 101 se declara una variable de tipo Queue Handle para crear una Queue , esta Queue tiene el nombre de mailbox , esta Queue ya fue creada en el main. En las siguientes líneas se declaran 2 variables de tipo semaphore handle con los nombres de mutex y LCD , estas 2 variables ya fueron utilizadas en el main , la de LCD es un semáforo binario y la de mutex es un Mutex. 
 
-•	_Funciones_
+
+## Funciones 
 
 ------------------------------------------------------
 
@@ -123,14 +126,14 @@ Solo creo una función en este programa, esta función se utiliza de la siguient
 
 ------------------------------------------------------
 
-•	_Funcionalidad de las tareas (Task)_
+##  Tasks
 
-# Simon 
+------------------------------------------------------
 
 _seconds_task_
   
 
-
+------------------------------------------------------
 
 
 
