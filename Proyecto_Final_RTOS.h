@@ -29,9 +29,9 @@
 /* TODO: insert other definitions and declarations here. */
 
 #define Stack 200						/* Value Stack from tasks */
-#define Alarm_Hours    2u				/* Time value in the alarm Hours*/
+#define Alarm_Hours    1u				/* Time value in the alarm Hours*/
 #define Alarm_Minutes 29u				/* Time value in the alarm Minutes */
-#define Alarm_Seconds 57u				/* Time value in the alarm  Seconds*/
+#define Alarm_Seconds  1u				/* Time value in the alarm  Seconds*/
 #define Set_Hours	   1u				/* Initial clock value Hours */
 #define Set_Minutes	  28u				/* Initial clock value Minutes */
 #define Set_Seconds	  56u				/* Initial clock value Seconds */
@@ -128,7 +128,7 @@ static void seconds_task (void *args){
 
 	Init* Init_Config = (Init*) args;
 	TickType_t xLastWakeTime;
-	const TickType_t xDelay1ms = pdMS_TO_TICKS(1);
+	const TickType_t xDelay1ms = pdMS_TO_TICKS(1000);
 	xLastWakeTime = xTaskGetTickCount();
 
 	time_msg_t Time_Second;
@@ -268,7 +268,7 @@ static void alarm_task   (void *args){
 static void print_task   (void *args){
 
 	time_msg_t *Recived;
-	static Int_to_char Init;
+	Int_to_char Init;
 
 	for (;;) {
 		xQueueReceive(mailbox, &Recived, portMAX_DELAY);
@@ -306,7 +306,7 @@ static void print_task   (void *args){
 static void LCD_init     (void *args){
 
 	Init* Init_Config = (Init*) args;
-	static Int_to_char Init;
+	static Int_to_char Init;   /// Si se delclara una variable static dentro de una tarea , no se puede asegurar que el stack de esa variable este dentro del stack de la tarea
 
 	for(;;){
 	    /************ Initializing the  Nokia 5110  LCD *********/
