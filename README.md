@@ -10,7 +10,8 @@ Se codifico un programa para hacer la funcionalidad de un reloj digital con Free
 
 * [Generalidades](#Introducción)
 * [Explicación del Codigo](#Descripción )
-    * [Main](#Main.c)
+    * [Main File](#Main.c)
+    * [Header File](#)
 
 
 
@@ -38,7 +39,7 @@ El objetivo principal de este codigo es utilizar FreeRTOS para generar el funion
 Se describira la funcionalidad de todo el codigo implementado
 
 ## Main.c 
- g
+ 
                      ­ main.c ­
 
 Como primera línea de código se manda a llamar una sola librería llamada “Proyecto_Final_RTOS.h” donde este archivo header contiene todo lo necesario para trabajar en el main. 
@@ -75,7 +76,7 @@ La primera tarea creada es una tarea llamda seconds_task y tendrá como nombre i
     
    
 
-
+## PROYECTO_FINAL_RTOS.h 
 
 
                      ­PROYECTO_FINAL_RTOS.h ­
