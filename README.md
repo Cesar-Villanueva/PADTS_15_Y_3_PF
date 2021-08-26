@@ -10,6 +10,8 @@ El objetivo principal de este codigo es utilizar FreeRTOS para generar el funion
 ![Schematic RTOS Armenta   Villanueva](https://user-images.githubusercontent.com/78750676/131023909-1952f561-399b-4331-a811-ded4e411bbc6.jpg)
 
 
+# Explicación del Codigo 
+
                      ­  main.c ­
 
 Como primera línea de código se manda a llamar una sola librería llamada “Proyecto_Final_RTOS.h” donde este archivo header contiene todo lo necesario para trabajar en el main. 
@@ -95,6 +97,7 @@ Solo creo una función en este programa, esta función se utiliza de la siguient
 
 •	_Funcionalidad de las tareas (Task)_
 
+# Simon 
 
 _seconds_task_
   
