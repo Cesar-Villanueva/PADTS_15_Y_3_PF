@@ -7,6 +7,9 @@ El objetivo principal de este codigo es utilizar FreeRTOS para generar el funion
 
                      ­  main.c ­
 
+En este archivo se encontrará la inicialización del programa principal, donde se mandarán a llamar las librerias necesarias ,creaciones de tareas y variables requeridas. 
+
+
                      ­PROYECTO_FINAL_RTOS.h ­
                      
 En este archivo se encuentra toda la funcionalidad del reloj digital , apoyandonos de otros headers files para su correcto funcionamiento. 
