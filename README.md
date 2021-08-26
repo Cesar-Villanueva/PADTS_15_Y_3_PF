@@ -1,4 +1,18 @@
 # Proyecto Final RTOS PADTS 3 y 15 (Armenta y Villanueva)
+
+Este codigo es el proyecto final de la materia de ___RTOS para microcontroladores___ en el diplomado de __Sistemas Electrónicos__ impartido por el __Cinvestav Unidad Guadalajara__ y el __IECA__.  
+
+## _Resumen_ 
+
+Se codifico un programa para hacer la funcionalidad de un reloj digital con FreeRTOS mostrando el la funinalidad en una pantalla LCD. 
+
+## Tabla de contenido 
+
+* [Generalidades](#Introducción)
+* [Explicación del Codigo](# Explicación del Codigo)
+
+# Generalidades 
+## Introducción
                      
                      ­ Descripción general ­
 El codigo fue generado con la herramienta MCUxpreso IDE v.11.3.1 para la tarjeta de desarrollo Freedoom Development Board K64 kinetis. 
