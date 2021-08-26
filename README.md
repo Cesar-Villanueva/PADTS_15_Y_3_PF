@@ -9,7 +9,8 @@ Se codifico un programa para hacer la funcionalidad de un reloj digital con Free
 ## Tabla de contenido 
 
 * [Generalidades](#Introducción)
-* [Explicación del Codigo](# Explicación del Codigo)
+* [Explicación del Codigo](#Main.c)
+* * [Main.c](#Main.c)
 
 # Generalidades 
 ## Introducción
@@ -31,9 +32,7 @@ El objetivo principal de este codigo es utilizar FreeRTOS para generar el funion
 
 # Explicación del Codigo 
 
-* [Explicación del Main](#Main.c )
-
-# Main.c 
+## Main.c 
 
                      ­  main.c ­
 
