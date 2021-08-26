@@ -39,7 +39,8 @@ int main(void) {
 
     /************ Semaphore to be created *********/
 
-    //Init_config.Sema_Second = xSemaphoreCreateBinary();
+    LCD = xSemaphoreCreateBinary();
+    xSemaphoreGive(LCD);
     Init_config.minutes_semaphore = xSemaphoreCreateBinary();
     Init_config.hours_semaphore   = xSemaphoreCreateBinary();
 
@@ -47,13 +48,19 @@ int main(void) {
     mailbox = xQueueCreate(SIZE_QUEUE,sizeof(time_msg_t*));
     vQueueAddToRegistry(mailbox, "time_queue");
 
+    /************ Mutex to be created *********/
+    Mutex = xSemaphoreCreateMutex();
+
+
+
+
     /************ The tasks to be created. *********/
     xTaskCreate(seconds_task, "Function seconds", Stack, (void*) &Init_config, configMAX_PRIORITIES -3, NULL);
     xTaskCreate(minutes_task, "Function Minutes", Stack, (void*) &Init_config, configMAX_PRIORITIES -2, NULL);
     xTaskCreate(hours_task,   "Function Hours"  , Stack, (void*) &Init_config, configMAX_PRIORITIES -1, NULL);
     xTaskCreate(alarm_task,   "Function Alarm"  , Stack, (void*) &Init_config, configMAX_PRIORITIES -4, NULL);
     xTaskCreate(print_task,   "Function print"  , Stack,                NULL , configMAX_PRIORITIES -4, NULL);
-
+    xTaskCreate(LCD_init  ,   "Function LCD"    , Stack, (void*) &Init_config , configMAX_PRIORITIES -1, NULL);
 
 
     /************ Start the calendarizer *********/
