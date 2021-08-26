@@ -3,7 +3,12 @@
                      ­ Descripción general ­
 El codigo fue generado con la herramienta MCUxpreso IDE v.11.3.1 para la tarjeta de desarrollo Freedoom Development Board K64 kinetis. 
 El programa en general es un relog digital , el cual se le puede programar una alarma , este reloj será mostrado por medio de una pantalla LCD Nokia 5110.
-El objetivo principal de este codigo es utilizar FreeRTOS para generar el funionamineto del reloj digital por medio de tareas con diferentes prioridades , ya que es un sistema operetivo en tiempo real (RTOS). El programa esta diseñado para NO utilizar ninguna función bloqueante (NonBlocking) y asi poder siempre estar ejecutando las tareas que sean requeridas. 
+El objetivo principal de este codigo es utilizar FreeRTOS para generar el funionamineto del reloj digital por medio de tareas con diferentes prioridades , ya que es un sistema operetivo en tiempo real (RTOS). El programa esta diseñado para NO utilizar ninguna función bloqueante (NonBlocking) y asi poder siempre estar ejecutando las tareas que sean requeridas.
+
+                     ­  Conexiones Fisicas ­
+                     
+![Schematic RTOS Armenta   Villanueva](https://user-images.githubusercontent.com/78750676/131023909-1952f561-399b-4331-a811-ded4e411bbc6.jpg)
+
 
                      ­  main.c ­
 
@@ -48,6 +53,9 @@ La primera tarea creada es una tarea llamda seconds_task y tendrá como nombre i
                      
 En este archivo se encuentra toda la funcionalidad del reloj digital , apoyandonos de otros headers files para su correcto funcionamiento. 
 
+Como todo programa en un inicio se mandan a llamar las librerías que sean necesarias, para este proyecto se mandan a llamar las librerías  , como estamos en un archivo header file , primero se tiene que codificar las macros para que el proyecto completo reconozca la librería , después se inicializan todas las librerías relacionadas con la tengo logia de ARM y se la propia tarjeta. Estas librerías son las que cualquier ejemplo del SDK ensambla en un proyecto por defecto la herramienta MCUxpresso.   
+
+•	_De la línea 22 a la línea 27_ 
 
 
 
