@@ -13,9 +13,9 @@ Se codifico un programa para hacer la funcionalidad de un reloj digital con Free
     * [Main File](#Main)
     * [Header File](#Header)
       * [Funciones](#Funciones)
-         * [Int to Char](#_Inttochar_)
+         * [Int to Char](#Inttochar)
       * [Tasks](#Tasks)
-         * [seconds_task](#_seconds task_) 
+         * [seconds_task](#secondstask) 
 
 
 
@@ -120,7 +120,7 @@ En la línea 101 se declara una variable de tipo Queue Handle para crear una Que
 
 ### Funciones 
 
-#### _Int to char_
+#### Int to char
 ------------------------------------------------------
 
 Solo creo una función en este programa, esta función se utiliza de la siguiente manera , la función pide como argumento un entero sin signo de 8 bits y retorno una estructura de tipo Int_to_Char de la línea de condigo 96, ahora apuntando a la línea 344 podemos ver que se empieza por inicializar una estructura llamada LCD y después de la línea 348  a la 371 se encuentran varias condicionales que lo que van a hacer esta estar preguntando en que rango de valores se encuentra el numero de entrada , y dependiendo del valor de entrada se le asignaran valores a la estructura en la variable de unidades y de decenas , que pasa el fragmento de las condicionales retornara como valor la estructura creada  pero ya con valores establecidos para poder acceder a ellos. Teniendo en cuenta que los valores que regresa son valores que en hexadecimal corresponde a un número en código ASIC .  Esta función está personalizada a este programa y se puede sustituir por cualquier otra siempre y cuando se respete la lógica de las tareas que ocupan esta función. 
@@ -131,7 +131,7 @@ Solo creo una función en este programa, esta función se utiliza de la siguient
 
 ------------------------------------------------------
 
-#### _seconds task_
+#### seconds task
   
 
 ------------------------------------------------------
