@@ -40,7 +40,7 @@ En esta parte de código es donde se crean todas las tareas que tendremos en el 
 La primera tarea creada es una tarea llamda seconds_task y tendrá como nombre identificador Function seconds , tendrá un Stack con el valor de una macro que esta declarada en el header, se le pasará como parámetros la estructura antes creada , las prioridad de esta tarea es igual a 2 y por ultimo se le pasa un valor Null al ultimo parametro.   Al igual función minutes_task , hours_task , alarm_task, y LCD_init , se les pasa los mismos parámetros , Stack y el Null , con la diferencia que tienen identificadores de nombres diferentes y el numero de prioridad , donde minutes_task tiene prioridad de 3 , hours_task tiene prioridad de 4 , alarm_task tiene prioridad de 1, y LCD_init tiene la prioridad mas alta , y por ultimo tenemos la tarea print_task que igual en diferencia de las demás , esta no recibe ningún parámetro, y su prioridad es de 1. 
     
    
-![bord2](https://user-images.githubusercontent.com/78750676/130980833-46a781a7-b392-43d7-8461-ffba8f2e8b97.jpg)
+
 
 
 
