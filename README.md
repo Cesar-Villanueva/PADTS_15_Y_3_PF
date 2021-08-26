@@ -13,7 +13,7 @@ Se codifico un programa para hacer la funcionalidad de un reloj digital con Free
     * [Main File](#Main)
     * [Header File](#Header)
       * [Funciones](#Funciones)
-         * [Int to Char](#_Int to char_)
+         * [Int to Char](#_Inttochar_)
       * [Tasks](#Tasks)
          * [seconds_task](#_seconds task_) 
 
