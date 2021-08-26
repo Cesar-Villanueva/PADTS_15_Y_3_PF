@@ -9,7 +9,7 @@ Se codifico un programa para hacer la funcionalidad de un reloj digital con Free
 ## Tabla de contenido 
 
 * [Generalidades](#Introducción)
-* [Explicación del Codigo](# Descripción )
+* [Explicación del Codigo](#Descripción )
 
 
 # Generalidades 
