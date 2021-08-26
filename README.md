@@ -4,7 +4,7 @@ Este codigo es el proyecto final de la materia de ___RTOS para microcontroladore
 
 ## _Resumen_ 
 
-Se codifico un programa para hacer la funcionalidad de un reloj digital con FreeRTOS mostrando el la funinalidad en una pantalla LCD. 
+Se codifico un programa para hacer la funcionalidad de un reloj digital con FreeRTOS mostrando el reloj en una pantalla LCD. 
 
 ## Tabla de contenido 
 
