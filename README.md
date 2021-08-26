@@ -53,9 +53,28 @@ La primera tarea creada es una tarea llamda seconds_task y tendrá como nombre i
                      
 En este archivo se encuentra toda la funcionalidad del reloj digital , apoyandonos de otros headers files para su correcto funcionamiento. 
 
-Como todo programa en un inicio se mandan a llamar las librerías que sean necesarias, para este proyecto se mandan a llamar las librerías  , como estamos en un archivo header file , primero se tiene que codificar las macros para que el proyecto completo reconozca la librería , después se inicializan todas las librerías relacionadas con la tengo logia de ARM y se la propia tarjeta. Estas librerías son las que cualquier ejemplo del SDK ensambla en un proyecto por defecto la herramienta MCUxpresso.   
+Como todo programa en un inicio se mandan a llamar las librerías que sean necesarias, para este proyecto se mandan a llamar las librerías  , como estamos en un archivo header file , primero se tiene que codificar las macros para que el proyecto completo reconozca la librería , después se inicializan todas las librerías relacionadas con la tecnología de ARM y de la propia tarjeta. Estas librerías son las que cualquier ejemplo del SDK ensambla en un proyecto por defecto en la herramienta MCUxpresso.   
 
 •	_De la línea 22 a la línea 27_ 
+
+En la línea 22 se manda a llamar a la librería FreeRTOS , ya que este proyecto es implementado un sistema operativo en tiempo real esta es la librería más importante. En las líneas siguientes se declaran librerías que complementan a FreeRTOS para utilizar tarea , semáforos , colas  y eventos. En la línea 27 se declara una librería que se llama nokiaLCD , esta librería contiene todas las funciones que se pueden utilizar en la LCD , y el método de transmisión es por SPI NonBlocking , estas librerías son personalizadas. 
+
+•	_De la línea 31 a la línea 44_ 
+
+En este fragmento de código se define todas mas macros que utilizan en este Header file tanto como en el archivo main , En la línea 31 se define el tamaño del Stack que tendrán las tareas cuando esta se crean, de la línea 32 a la 34 se defiene los valores de la alarma del reloj, de la línea 35 a la 37 se define los valores de set del reloj estos valores son usados para mostrara el reloj en un inicio en cierta hora específica, de la línea 38  a la 40 se definen 3 mascaras de 3 bits diferentes , cada bit corresponde a una bandera de cada tarea especifica , estas macros sirven para la recepción del event group de la alarma , de la línea 41 a la 43 se definen los valores máximos de conteo para los contadores internos de las tareas para simular los segundos , minutos y horas y por último se define el valor del tamaño de la Queue. 
+
+•	_De la línea 46 a la 55_ 
+
+Se inician 2 arreglos con valores en hexadecimal , estos 2 arreglos son imágenes de 84x48 pixeles que servirán como un marco para la pantalla y el reloj se vean más formal y presentable. Estos arreglos se declaran como constantes para que no ocupe memoria RAM.  (Se puede utilizar cualquier marco, es dado caso de no querer marco ir a comentar la línea 319). 
+
+
+
+•	_De la línea 65 a la línea 84_ 
+
+Se define una estructura con un typedef, esta estatura tiene un identificador llamado Init , este tipo de estructura se declaro en el main , aquí se explicará el porqué de cada miembro de esta estructura. 
+Esta estructura se hizo con el fin de que, al momento de crear las tareas , se puedera pasar una referencia única de tamaño de 32 bits de palabra (Que es el que maneja este microcontrolador) y no pasar una copia de todos los datos. 
+De la línea 67 a la 69 se declaran 3 variables de tipo entero sin signo de 8 bits , este tipo de variables son reconocidas en la librería #include <stdint.h> y esta librería viene incluida una la librería en el proyecto y no se tiene que volver a declarar. Estas 3 variables servirán para poner un valor de set de la alarma , en este caso se le paso una macro en el main. De la línea 72 a la línea 74   
+
 
 
 
