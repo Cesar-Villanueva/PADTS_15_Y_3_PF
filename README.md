@@ -10,7 +10,7 @@ Se codifico un programa para hacer la funcionalidad de un reloj digital con Free
 
 * [Generalidades](#Introducción)
 * [Explicación del Codigo](#Descripción )
-    * [Main ](##Main.c)
+    * [Main](#Main.c)
 
 
 
