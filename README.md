@@ -9,10 +9,17 @@ El objetivo principal de este codigo es utilizar FreeRTOS para generar el funion
                      
 ![Schematic RTOS Armenta   Villanueva](https://user-images.githubusercontent.com/78750676/131023909-1952f561-399b-4331-a811-ded4e411bbc6.jpg)
 
+                     ­  Diagrama de flujo propuesto ­
+                     
+![image](https://user-images.githubusercontent.com/78750676/131033808-fbea2066-dc73-45f9-850e-9b1e8dbb71d1.png)
+
+
 
 # Explicación del Codigo 
 
-* [General info](#general-info)
+* [Explicación del Main](#Main.c )
+
+# Main.c 
 
                      ­  main.c ­
 
