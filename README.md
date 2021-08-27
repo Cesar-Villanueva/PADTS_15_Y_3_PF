@@ -164,7 +164,7 @@ Esta tarea es parcialmente idéntica a la tarea de __minutes_task__ en cuestión
 
 
 
-  _alarm_task_
+#### _alarm_task_
 
 ------------------------------------------------------
 
@@ -179,7 +179,8 @@ Si inicia el ciclo de la tarea , después se manda a llamar una variable xEvente
 
 ------------------------------------------------------
 
-  _print_task_
+
+#### _print_task_
 
 ------------------------------------------------------
 
