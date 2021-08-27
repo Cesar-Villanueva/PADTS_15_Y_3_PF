@@ -163,9 +163,31 @@ Esta tarea es parcialmente idéntica a la tarea de __minutes_task__ en cuestión
 ------------------------------------------------------
 
 
- #### _alarm_task_
+
+  _alarm_task_
 
 ------------------------------------------------------
+
+•	_De la línea 236 a la 241_ 
+
+Antes de entrar al ciclo de la tarea se tiene los siguiente, en la línea 236 se declará una variable de un puntero de tipo estructura Init y se iguala a un casteo de puntero estructura tipo Init del argumento de entrada tipo void de la tarea , esto se hace para tener esa copia de valores es el Stack de la tarea . En la línea 237 se declara una constante de tipo EvenBits_t y que se llama xBitsToWaitFor y esta variable estará igualadad a una compuerta OR de bitwise de 3 macros , que estas macros son las tres mascaras de bits que se dan al evento group en cada tarea correspondiente. Despues se declara una variable de tipo EventBits_t que se llamará xEventGroupValue, en la siguiente línea se declara una constante de tipo Tick Type y estará igualdad al numero de tick que son en 1 segundo como se hizo en la tarea uno al inicio.  Y por último  en la línea 240 y 241 se declaran 2 variables tipo char y se igualan a cadenas de caracteres , donde la primera en un mensaje que dice ALARM y el otro es una cadena con espacios del tamaño de ALARM. 
+
+•	_De la línea 243 a la 266_
+
+Si inicia el ciclo de la tarea , después se manda a llamar una variable xEventeGroupValue y se iguala a una función de xEvenetGruopWaitBits , esta función lo que hace es de un grupo de eventos dado , va a esperar ciertos bits o un solo bits seteados de ese grupo dado, entonces como primer argumento se da el grupo que se declaro en el main , y los bits que tiene son los que las tareas __seconds_task__ , __minutes_task__,  __hours_task__ dan como set , después se pasa la variable xBitsWaitFor que es la OR de las macros , esto significa que estamos diciendo que bits en mascaras estamos esperando , despues se pasa pdTRUE estos significa que cada que se cumpla esta función queremos que los bits se limpien , después se pasa pdTRUE esto significa que queremos esperar a todos los bits si fuera pdFALSE con que un bit este en 1 la función se da, para este caso queremos tener los 3 bits en 1 , y por ultimo si no se cumple esta función se bloquea la tarea hasta que estos 3 bits se den , si es el caso que se den, se pasa a la siguiente línea que es una condicional, que está preguntando si el retorno de la función es diferente de cero , ya que si se cumple esta función arroja cualquier valor excepto el cero, una vez que se cumple esta condición se pasa a la línea 246 donde se toma un semáforo , para este caso no se toma un semáforo binario , si no un mutex , recordando que el mutex lo pueden tomar y liberar la misma tarea , si este semáforo es disponible se toma y se pasa a la siguiente línea donde se mandaran a llamar funciones de la pantalla LCD Nokia 5110, donde de la línea 247 a la 250 lo que hará el LCD es prender el backligth imprimirá que la alarma ocurrió , actualizara la pantalla y se ira a un delay de 1ms , esto se repetirá otra 2 veces mas y por ultimo se limpia somo ese mensaje en especifico con el char de cadenas de espacios y se libera el mutex que se tomo al principio.   
+
+
+------------------------------------------------------
+
+  _print_task_
+
+------------------------------------------------------
+
+Antes de entrar al ciclo de la tarea se declara una variable puntero estructura de tipo Time_msg_t que tendrá como nombre Recived y un variable de tipo estructura Int_to_char con el nombre Init. 
+
+•	_De la línea 273 a la 303 
+
+Estando dentro del ciclo de la tarea  en la línea 274 se manda a llamar una función para recibir una Queue la Queue que se va a recibir es  la mailbox creada en el main, si llegara  tener un dato esta mailbox se guardara en la variable Recived , recordando que los datos enviados en la mailbox son de tipo time_msg_t , si la mailbox esta vacía la tarea se bloqueara por un tiempo indefinido hasta que reciba algo el mailbox , si es el caso que reciba lago pasa a la siguiente línea en la cual se toma el mutex declarado en el main , si este está libre toma y sigue la ejecución y si alguien mas tomo el mutex la tarea se bloquea indefinidamente hasta que se libere el mutex , cuando este libre el mutex, pasa a la siguientes línea , en la línea 276 esta una condicional IF es está preguntando el parámetro de tipo de dato de la estructura que se recibió de la Queue mailbox es igual se un tipo enumerado, si esta condición se cumple para a la siguiente línea, donde se mostrarán los segundos en la pantalla en la LCD , en la línea 278 la estructura Init se iguala a el retorno de la función INT_CHAR  y como argumento de entrada es parámetro de valor de la estructura obtenida de la Queue mailbox , como esta función regresa una estructura con 2 valores en hexadecimal que son unidades y decenas , entonces de la línea 279 a la 281 se imprimirán las unidades y las decenas de los segundos y el e la línea 282 se libera el espacio de memoria del mensaje recibido. De la linea 284 a la 301 se repite lo anterior , pero para los minutos y horas si las condiciones se cumplen y por último en la línea 302 se libera el mutex tomado al principio de la tarea. 
 
 
 
