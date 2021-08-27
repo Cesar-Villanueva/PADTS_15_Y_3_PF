@@ -14,6 +14,7 @@ Se codifico un programa para hacer la funcionalidad de un reloj digital con Free
     * [Header File](#Header)
       * [Funciones](#Funciones)
       * [Tasks](#Tasks)
+      * [¿Como funciona ?](#Example)
 * [Resultados](#Resultados)
 
 
@@ -193,6 +194,93 @@ Estando dentro del ciclo de la tarea  en la línea 274 se manda a llamar una fun
 
 
 ------------------------------------------------------
+
+## Example 
+
+
+¿Pero qué es lo que pasa en ejecución  ?
+Se mostrará un ejemplo y ser ira desglosando que es lo que está pasando en todo el sistema y porque se asignaron las prioridades en el archivo main de esa manera. 
+Ahora bien, vamos a suponer lo siguiente 
+•	Se pondrá el reloj inicialmente en 00:00:00
+•	Y una alarma en 00:00:23 
+•	Y todo lo demás se deja en default 
+
+Una vez que se cargue el programa a la tarjeta se pone en RUN y pasa lo siguiente, recordando que las tareas se ejecutaran de la siguiente manera de acuerdo a las prioridades , desde la mas alta a la más baja:
+•	Fuction LCD
+•	Fuction Hours
+•	Fuction Minutes 
+•	Fuction Seconds 
+•	Fuction Alarm 
+•	Fuction print
+Imagen 
+Entonces se inicia el programa , todo el main se inicializa , se crean las tareas y se inicia el Scheduler. 
+
+```
+Primera tarea en ejecutarse es LCD_init 
+```
+Toma el semáforo binario dado en el main  e  inicializa toda la pantalla.
+
+```
+Segunda tarea en ejecutarse es  LCD_init 
+```
+Aunque parezca extraño , esta tarea una vez que se ejecuta , se vuelve a ejecutar , esto debido a que es ningún momento se bloquea y suspende , entonces siempre esta en estado ready , y aunque otras tareas también estén listas para ejecutarse , esta función tiene la prioridad mas alta , cuando se vuelve a ejecutar la función y llegar a la parte de tomar el semáforo binario , esta función se bloqueara , debido a que ya fue tomado una vez , y ninguna tarea ha dado un nuevo set a este semáforo, entonces esta tarea se bloquea en toda la ejecución restante , porque ninguna función pone en set este semáforo , esto se hizo con la intención , de no mandar a suspender la función por si se llegara a ampliar el código y se quieta volver a inicializar la pantalla solo se necesitaría dar un set al semáforo correspondiente . 
+```
+Tercera tarea en ejecutarse  puede ser minutes _task o hours_task
+```
+Puede ejecutarse cualquiera de la 2 porque tiene las mismas prioridades , vamos a suponer que se ejecuta hours_task, entonces, inicia los parámetros antes de entrar al ciclo de la tarea , entra al ciclo de la tarea , donde realiza la primera validación que será True , porque si se cumple el valor de la alarma con el valor actual de las horas 0=0, entonces limpia el bit de los minutos de evento group , que en un inicio está limpio , y da un set al bit de las horas del event group
+__Bits del event group__ = [1,0,0]  
+Después pasa a la siguiente línea donde quiere tomar un semáforo binario, que en este momento no se ha dado un set , entonces la tarea pasa a bloquearse esperando ese semáforo. 
+ ```
+Cuarta tarea en ejecutarse  es minutes _task 
+```
+Esta es la tarea que siguen en ejecutarse por la prioridad , entonces se inicializa todo lo necesario antes de entrar al ciclo de la tarea , entra al ciclo de la tarea y primer se verifica una condicional que pregunta si el valor de la alarma es igual al actual , lo cual es True , entonces se da un set del bit los minutes y se limpia el bit de los segundos que en un principio esta limpio todo esto del evento group que todos comparten porque es global la variable. 
+__Bits del event group__ = [1,1,0]  
+Después pasa a la siguiente línea donde quiere tomar un semáforo binario, que en este momento no se ha dado un set , entonces la tarea pasa a bloquearse esperando ese semáforo. 
+
+```
+Quinta tarea en ejecutarse  es seconds_task
+```
+Esta es la tarea que siguen en ejecutarse por la prioridad , entonces se inicializa todo lo necesario antes de entrar al ciclo de la tarea , entra al ciclo de la tarea y primer se verifica una condicional que pregunta si el valor de la alarma es igual al actual , lo cual es False porque 0 no es igual a 23  
+__Bits del event group__ = [1,1,0]  
+Después sigue ejecutándose donde se le hace una suma contador que, en el set de la hora actual , entonces tenemos que 0+1 es el valor actual del segundo. Este valor y el tipo de valor se le pasan a una estructura , se libera memoria para poder enviar la estructura con los datos de interés, despues se verifica una condicional que pregunta de  si 60 = 1 , donde esto es falso , en este caso pasa al else , donde en este se da el valor de la estructura a un puntero de estructura de mismo tipo y se envia los datos por la Queue mailbox . Por último, se bloquea la tarea con un delay , este delay tiene que ser de un tiempo para que el dure un segundo toda la ejecución general de la tarea , como ejemplo si para cuando se llega a la línea 161 pasaron 3us entonces el delay tiene que durar lo restante para llegar a 1 s.   
+
+```
+Sexta tarea en ejecutarse  puede ser alarm_task o print_task 
+```
+Puede ser ejecutable cualquiera de las 2 tareas ya que tiene la misma prioridad, supongamos que inicia la tarea alarm_task , entonces inicializa los lo necesario antes de entrar al ciclo de la tarea , entra al ciclo de la tarea , donde lo primero que hará es verificar un event gruop que esta esperando por todos los bits indicados , en este caso esta esperando 3 bits 
+ 
+__Bits esperados__ = [1,1,1] 
+Pero los bits están 
+__Bits del event group__ = [1,1,0]  
+Entonces la tarea de bloquea y se queda esperando todos los bits . 
+
+```
+Séptima  tarea en ejecutarse  es print_task
+```
+Para este momento es la única tarea que esta en ready , y se supone que aun no pasa el delay de la tarea de seconds_task, entonces se ejecuta la tarea se inicia todo lo necesario antes de entrar al ciclo de la tarea , se entra al ciclo de la tarea y lo primero que hace es verificar si hay algo recibido en al Queue mailbox , lo cual es cierto , porque la tarea se seconds_task envio el valor de 1 y el tipo enumerado , se pasa a la siguiente línea donde se toma un mutex y ese mutex no lo ha tomado nadie entonces sigue la ejecución , después entra en la primera verificación de un if , donde esta preguntado si el tipo enumerado de la estructura es de seconds_type , lo cual es True , entonces entra a la condicional , donde se iguala una estructura de tipo Int_to_char a la función que regresa una estructura que tiene unidades y decenas de parámetros de acuerdo a un numero ingresado . en este caso se ingreso el 1 , lo cual regresa un 1 en unidades y un 0 en decenas y lo imprime en la LCD Nokia y libera la memoria del mensaje de la Queue mailbox. Sale de la condicional , por obviedad las demás condiciones no se cumplen y por ultimo libera el mutex que tomo. 
+ 
+```
+Octava  tarea en ejecutarse  es  print_task
+```
+Ya que no se bloquea esta tarea , está en ready , vuelve a entrar a la tarea y lo primero es verificar si existe un mensaje en al Queue mailbox , lo cual esta vacia , entonces la tarea se bloquea  indefinidamente esperando a que envíen un dato por el mailbox. 
+
+
+
+
+```
+Novena  tarea en ejecutarse  puede ser IDLE o seconds_task
+```
+En este punto todas las tareas están bloqueadas , supongamos que la tarea seconds_task aun le falta 1ms para completar el delay entonces el IDLE se ejecutara 1ms aprox porque ninguna tarea se desbloqueara , ya que todas depende de una cadenita que viene desde seconds_task.  
+
+```
+¿Qué sigue ? 
+```
+Las únicas tareas que se estarán desbloqueando son seconds_task , print_task y el IDLE, una ves que los segundos llegue a 23 pasa lo siguiente. 
+ Los bits se completan 
+  
+__Bits del event group__ = [1,1,1] 
+
+Y se desbloquea alarm_task , luego se envia a al mailbox el 23 y se desbloquea print_task. Supongamos que alarm toma el control , se ejecuta toma el mutex   e imprime en la lcd Nokia el string de __ ALARM !!!__ , luego se da un delay de 1s , se bloquea la tarea , entonces la tarea print_task se ejecuta porque tiene un mailbox , pero al momento de tomar el mutex se bloquea , porque el mutex lo tomo la tarea de alarm_task , entonces lo único que se ejecuta es las tarea seconds_task y IDLE.  Esto se puede invertir ya que tiene las mismas prioridades. Una vez que termina de ejecutarse alarm_task y que libera el mutex , la tarea print_task va y se ejecuta con el valor actual del reloj y no en el que se quedó. Esto demuestra que no se interrumpen las impresiones de la pantalla lcd  y que el sistema de las demás tareas  sigue funcionando. 
 
 
 # Resultados
