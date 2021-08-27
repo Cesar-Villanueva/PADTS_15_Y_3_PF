@@ -197,6 +197,18 @@ Estando dentro del ciclo de la tarea  en la línea 274 se manda a llamar una fun
 
 # Resultados
 
+```
+Los resultados en la LCD nokia 5110 se tienen que ver de la sigueinte manera 
+```
+
+## Inicio de la Pantalla 
+![20210826_195052](https://user-images.githubusercontent.com/78750676/131056226-c5d713a2-a960-4829-a23f-9faae1ff06eb.jpg)
+
+
+## Alarma activada 
+
+![20210826_195132](https://user-images.githubusercontent.com/78750676/131056233-9d0ba1b9-7fc5-42df-a8d7-8f986f6ccd3f.jpg)
+
 
 
                    
