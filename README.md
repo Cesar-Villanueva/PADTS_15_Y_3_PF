@@ -131,10 +131,43 @@ Solo creo una función en este programa, esta función se utiliza de la siguient
 
 #### _seconds_task_
 
+------------------------------------------------------ 
+Esta tarea llamada seconds_task será la tarea encargada de llevar el conteo en segundos del segundero del reloj digital, esto se logrará haciendo que la tarea dure exactamente 1 segundo en ejecutarse por completo. Esta función servirá como base de tiempo para todo el sistema , ya que esta función estará ligada a otras por medio de semáforos. Dicho lo anterior: 
+
+•	_De la línea  129 a la 132_ 
+
+Antes de entrar al ciclo de la tarea en la línea 129 se declara un puntero de una estructura tipo Init y se iguala esta declaración a un casteo de puntero de la estructura Init a los argumentos tipo void de entrada a la tarea , esto se hace para poder tener toda la configuración que se hizo en la main y tenerlos en el Stack de la tarea por medio de esta asignación. En la siguiente línea se declara una variable de tipo Tick Type y la llamamos xLastWaitTime , después se declara una variable constante de tipo Tick Type que se llama xDelay1s y se igualara a una función que nos convierte los milisegundos ingresados a Ticks del systick y de la línea 134 a la 135 se declaran 2 variables de tipo Time msg que si recordamos es una estructura que contiene un valor de tipo enumerado y un valor entero sin signo de 8 bits. Estas dos variables nos servirán para poder enviar un dato a la Queue mailbox creada en el main. Para este caso haremos una copia del dato y la enviaremos. 
+
+•	_De la línea 137 a la línea 161 
+
+Una vez que se declara todo lo inicial en la tarea , en la línea 137 entramos al ciclo for infinito de la tarea , una vez dentro del ciclo de la tarea es donde tendremos la funcionalidad , empezando, teniendo una validación en la línea 140, esta validación por medio de un if estará preguntando si el valor configurado para la alarma es igual al valor actual del del contador que es el segundero. Si esta condición es cierta se da un set del bit que le corresponde a los segundos , este set se hace por medio del evento group y se utiliza una mascara , esta mascara esta en una macro ya antes explicada.  Ahora bien, si la condicional no se cumple sigue la siguiente línea 143 donde el valor actual del segundo se le suma un 1 esto se hace desde la referencia que tenemos de la estructura inicial, pero en el Stack de la tarea , en pocas palabras tenemos una copia de la original la cual iremos modificando al paso del tiempo. Después Se le darán valores a la estructura de time msg , donde al parámetro time Type se le pasa un tipo enumerado que bien esta representado por el numero 0 y esto representa que es un dato de tipo segundos  y después se le pasa el valor a el parámetro value y se iguala al valor actual del segundo , entonces , se puede observar que esta estructura toma el tipo y el valor actual. después en la línea 146  se utilizará memoria dinámica liberando un espacio de memoria y asignándolo a la variable Send que es un puntero de una estructura , esto  de no hacerse con memoria dinámica podría perderse el valor actual mandado con la Queue , si se hace con memoria dinámica , se asegura que el valor es el enviado. Luego de liberar el espacio de memoria  en la línea 147 se tiene una condicional que estará preguntando si la macro SECONDS_MAX con un valor de 60 es igual al valor actual del segundero , si esta condición es cierta pasa lo siguiente, en la línea 149 el  segundero actual se iguala a cero , al parámetro de la estructura Time second en el value se iguala al valor del segundero actual , después el valor de la estructura de time second se iguala al puntero de estructura Send , esto para hacer una copia de los valores , este paso se puede quitar en futuros códigos , ya que no es necesario y se puede pasar la referencia directa siempre y cuando se haya liberado un espacio de memoria. Una ves que se hizo la copia a send , se manda estra estructura por medio de una Queue  y a la Queue que se manda el dato es la Queue mailbox antes declarada en el main y después se da un semáforo binario , este semáforo es el minutes semaphore . Si la condición de la línea 147 no se cumple , se iguala la estructura puntero Send a la estructura Time second y después se envía la estructura Send por medio de la Queue malibox. Por último, en la línea 161 se llama a una delay until , este delay lo que hace es asegurarse que la tarea dure 1 segundo exacto en toda su ejecución y requiero como parámetros la referencia de cuantos tick lleva la tarea y cuanto es el delay , en este caso el delay tienen que ser de 1 s. 
+
+------------------------------------------------------ 
+
+#### _minutes_task_
+
+------------------------------------------------------
+
+Esta tarea es parcialmente idéntica a la tarea de __seconds_task__ en cuestión a funcionalidad y tipos de variables , solo los nombres son diferentes para poder entender el contexto de la tarea , lo que lo diferencia es que en la línea 175 y 176 primero se limpia el bit del event group de segundos esto se hace por el que ese bit se va a estar en Set una gran cantidad de veces y solo nos importan una en especifico y en la siguiente línea se da un set al bit de ahora de los minutos , otra diferencia es la línea 178 donde va a tomar un semáforo , en este caso se quiere tomar el semáforo binario minutes_semaphore , este semáforo es el que va a darlo la tarea de segundos cada que se cumplan 60 segundos, si este semáforo no se puede tomar la tarea si blockeara por un tiempo infinito esperando hasta que alguien de ese semáforo y por ultimo esta tarea no se bloquea suspende en ningún momento , esto porque depende completamente de la tarea __seconds_task__ es por eso que al principio se dice que la tarea __seconds_task__ es la base de tiempo del sistema . 
+
+
+------------------------------------------------------
+
+#### _hours_task_
+
+------------------------------------------------------
+
+Esta tarea es parcialmente idéntica a la tarea de __minutes_task__ en cuestión a funcionalidad y tipos de variables , solo los nombres son diferentes para poder entender el contexto de la tarea , lo que lo diferencia es que en la línea 175 y 176 primero se limpia el bit del event group de minutos esto se hace por el que ese bit se va a estar en Set una gran cantidad de veces y solo nos importan una en específico y en la siguiente línea se da un set al bit de ahora de los horas , otra diferencia es la línea 178 donde va a tomar un semáforo , en este caso se quiere tomar el semáforo binario hours_semaphore , este semáforo es el que va a darlo la tarea de minutos cada que se cumplan 60 minutos , si este semáforo no se puede tomar la tarea si blockeara por un tiempo infinito esperando hasta que alguien de ese semáforo y por ultimo esta tarea no se bloquea suspende en ningún momento , esto porque depende completamente de la tarea __minutes_task__ .
+
+
 ------------------------------------------------------
 
 
-  
+ #### _alarm_task_
+
+------------------------------------------------------
+
+
 
 ------------------------------------------------------
 
